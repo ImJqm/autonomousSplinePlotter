@@ -49,10 +49,10 @@ def main():
     l1 = Line(p0, p1, WHITE, 5)
     elements.append(l1)
 
-    p2 = Point(120,120,1,WHITE)
+    p2 = Point(120,120,1,RED)
     elements.append(p2)
 
-    p3 = Point(130,130,1,RED)
+    p3 = Point(130,130,1,WHITE)
     elements.append(p3)
 
     l2 = Line(p2, p3, WHITE, 5)
