@@ -1,0 +1,14 @@
+import pygame
+import math
+
+
+class Robot:
+    def __init__(self, x, y, theta, image):
+        self.x = x
+        self.y = y
+        self.theta = theta
+        self.image = pygame.image.load(image).convert_alpha()
+        # THis should be of type string for path of robot image
+
+    def draw(self, surface):
+        surface.blit(pygame.transform.rotate(self.image, self.theta))

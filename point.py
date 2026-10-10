@@ -1,54 +1,64 @@
 import pygame
 import math
 
-class Point:
 
+class Point:
     def __init__(self, x, y, r, col):
         self.x = x
         self.y = y
         self.r = r
         self.type = "circle"
         self.isDragging = False
-        self.col  = col
+        self.col = col
 
     def draw(self, surface):
         pygame.draw.circle(
-                            surface,
-                            self.col,
-                            (self.coordinateTransform(surface)),
-                            self.r *  surface.get_rect().width / 144
-                        )
+            surface,
+            self.col,
+            (self.coordinateTransform(surface)),
+            self.r * surface.get_rect().width / 144,
+        )
 
     def checkMouseCollision(self, distance, hitboxMultiplier):
         return distance < self.r * hitboxMultiplier
 
-    def computeDistance(self, pos, screen, interactionRect):
+    def computeDistance(self, pos, screen, interactionRect, offset):
         print("Mouse POS", pos)
-        print("Parsed Mouse", self.parseMouseCoords(pos, screen, interactionRect))
+        print(
+            "Parsed Mouse", self.parseMouseCoords(pos, screen, interactionRect, offset)
+        )
         print("Actual Coords", (self.x, self.y))
-        return math.dist(self.parseMouseCoords(pos, screen, interactionRect), (self.x, self.y))
+        return math.dist(
+            self.parseMouseCoords(pos, screen, interactionRect, offset),
+            (self.x, self.y),
+        )
 
     def coordinateTransform(self, surface):
-        return (self.x * surface.get_rect().width / 144 , ((144-self.y) * surface.get_rect().height / 144))
+        return (
+            self.x * surface.get_rect().width / 144,
+            ((144 - self.y) * surface.get_rect().height / 144),
+        )
 
-    def parseMouseCoords(self, pos, screen, interactionRect):
+    def parseMouseCoords(self, pos, screen, interactionRect, offset):
         xMax = interactionRect.width
         yMax = interactionRect.height
         screen_rect = screen.get_rect()
         newX = None
         newY = None
-        if (pos[0] > xMax):
+        posX = pos[0] - offset[0]
+        posY = pos[1] - offset[1]
+        if posX > xMax:
             newX = xMax
-        elif (pos[0] < 0):
+        elif posX < 0:
             newX = 0
         else:
-            newX = pos[0]  
-        if (pos[1] > yMax):
+            newX = posX
+        if posY > yMax:
             newY = yMax
-        elif (pos[1] < 0):
+        elif posY < 0:
             newY = 0
         else:
-            newY = pos[1]  
+            newY = posY
         return (newX / xMax * 144, (144 - newY / yMax * 144))
 
     def updateCoords(self, pos):
