@@ -109,7 +109,7 @@ def main():
                 print("REISIZING")
                 width, height = event.w, event.h
                 dimension = width if width < height else height
-                screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+                # screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
                 bg_rect = pygame.Rect(0, 0, dimension, dimension)
                 # scaleX = width / 1080
                 # scaleY = height / 1080
